@@ -18,6 +18,12 @@ bibtex_reference_style = 'author_year'
 
 templates_path = ['_templates']
 
+exclude_patterns = ['**refs.*'] if 'wiki' in tags else []
+suppress_warnings = [
+    'toc.not_readable',
+    'toc.excluded',
+]
+
 # Book output (LaTeX/PDF)
 latex_engine = 'pdflatex'
 latex_elements = {
