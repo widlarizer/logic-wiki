@@ -14,7 +14,7 @@ where $\alpha$ and $\beta$ are design parameters.
 
 ## Basic Example
 
-Here's a simple Verilog module demonstrating foo:
+Here's a simple{cite}`knuth1977fast` Verilog module demonstrating foo:
 
 ```verilog
 module foo_example (
