@@ -1,6 +1,6 @@
 ````{only} book
 # References
 
-```{bibliography} refs.bib
+```{bibliography} pda.bib
 ```
 ````

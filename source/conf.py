@@ -13,7 +13,10 @@ myst_enable_extensions = [
     "colon_fence",
 ]
 
-bibtex_bibfiles = ['chapters/pda/refs.bib', 'chapters/synth/refs.bib']
+bibtex_bibfiles = [
+    'chapters/pda/pda.bib',
+    'chapters/synth/synth.bib',
+]
 bibtex_reference_style = 'author_year'
 
 templates_path = ['_templates']
