@@ -47,7 +47,7 @@
             src = ./.;
             buildInputs = [ pkgs.bash pythonEnv ] ++ extraInputs;
             buildPhase = ''
-              sphinx-build -b ${format} -t ${tag} source build/${tag}
+              sphinx-build -b ${format} -t ${tag} source build/${tag} -W
               ${extraSteps}
             '';
           };
