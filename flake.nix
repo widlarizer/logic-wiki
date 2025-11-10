@@ -18,11 +18,24 @@
           sphinx-rtd-theme
         ]);
 
-        texEnv = [
-          pkgs.texlive.combined.scheme-medium
-          pkgs.texlivePackages.fncychap
-        ];
-
+        texEnv = pkgs.texlive.combine {
+          inherit (pkgs.texlive) scheme-basic
+            fncychap
+            titlesec
+            tabulary
+            varwidth
+            framed
+            fancyvrb
+            float
+            wrapfig
+            parskip
+            upquote
+            capt-of
+            needspace
+            hypcap
+            collection-fontsrecommended
+            collection-latexrecommended;
+        };
         buildSphinx = { name, format, tag, extraInputs ? [], extraSteps ? "" }:
           pkgs.stdenv.mkDerivation {
             inherit name;
