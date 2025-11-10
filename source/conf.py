@@ -17,7 +17,7 @@ bibtex_bibfiles = ['refs.bib']
 bibtex_reference_style = 'author_year'
 
 templates_path = ['_templates']
-exclude_patterns = []
+exclude_patterns = ['*_book*'] if 'wiki' in tags else ['*_wiki*']
 
 # Book output (LaTeX/PDF)
 latex_engine = 'pdflatex'
