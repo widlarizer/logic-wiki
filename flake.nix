@@ -22,7 +22,11 @@
           book = pkgs.stdenv.mkDerivation {
             name = "sphinx-book";
             src = ./.;
-            buildInputs = [ pythonEnv pkgs.texlive.combined.scheme-medium ];
+            buildInputs = [
+              pythonEnv
+              pkgs.texlive.combined.scheme-medium
+              pkgs.texlivePackages.fncychap
+            ];
             buildPhase = ''
               cd source
               sphinx-build -b latex -t book . ../build/book
