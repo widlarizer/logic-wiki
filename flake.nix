@@ -18,36 +18,40 @@
           sphinx-rtd-theme
         ]);
 
-        texEnv = pkgs.texlive.combine {
+        texEnv = [ (pkgs.texlive.combine {
           inherit (pkgs.texlive) scheme-basic
+            latexmk
             fncychap
+            tex-gyre
+            tex-gyre-math
+            xcolor
+            wrapfig
+            needspace
+            varwidth
+            booktabs
+            collection-fontsrecommended
+            cmap
             titlesec
             tabulary
-            varwidth
             framed
             fancyvrb
             float
-            wrapfig
             parskip
             upquote
-            capt-of
-            needspace
-            hypcap
-            collection-fontsrecommended
-            collection-latexrecommended;
-        };
+            capt-of;
+        })];
         buildSphinx = { name, format, tag, extraInputs ? [], extraSteps ? "" }:
           pkgs.stdenv.mkDerivation {
             inherit name;
             src = ./.;
-            buildInputs = [ pythonEnv ] ++ extraInputs;
+            buildInputs = [ pkgs.bash pythonEnv ] ++ extraInputs;
             buildPhase = ''
               sphinx-build -b ${format} -t ${tag} source build/${tag}
               ${extraSteps}
             '';
             installPhase = ''
               mkdir -p $out
-              cp -r build/${tag}/* $out/
+              cp *.pdf $out/ 2>/dev/null
             '';
           };
       in
@@ -60,7 +64,6 @@
             extraInputs = texEnv;
             extraSteps = ''
               cd build/book && make
-              rm -rf !(*.pdf)
             '';
           };
 
@@ -72,7 +75,7 @@
         };
 
         devShells.default = pkgs.mkShell {
-          buildInputs = [ pythonEnv ] ++ texEnv;
+          buildInputs = [ pkgs.bash pythonEnv ] ++ texEnv;
           shellHook = ''
             echo "Sphinx documentation environment loaded"
             echo "Build book: nix build .#book"
