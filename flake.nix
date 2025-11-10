@@ -73,6 +73,7 @@
             format = "html";
             tag = "wiki";
             installPhase = ''
+              mkdir -p $out
               ls build/wiki
               cp -r build/wiki/* $out/
             '';
