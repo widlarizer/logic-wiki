@@ -10,60 +10,60 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
+
         pythonEnv = pkgs.python3.withPackages (ps: with ps; [
           sphinx
           myst-parser
           sphinxcontrib-bibtex
           sphinx-rtd-theme
         ]);
+
+        texEnv = [
+          pkgs.texlive.combined.scheme-medium
+          pkgs.texlivePackages.fncychap
+        ];
+
+        buildSphinx = { name, format, tag, extraInputs ? [], extraSteps ? "" }:
+          pkgs.stdenv.mkDerivation {
+            inherit name;
+            src = ./.;
+            buildInputs = [ pythonEnv ] ++ extraInputs;
+            buildPhase = ''
+              sphinx-build -b ${format} -t ${tag} source build/${tag}
+              ${extraSteps}
+            '';
+            installPhase = ''
+              mkdir -p $out
+              cp -r build/${tag}/* $out/
+            '';
+          };
       in
       {
         packages = {
-          book = pkgs.stdenv.mkDerivation {
+          book = buildSphinx {
             name = "sphinx-book";
-            src = ./.;
-            buildInputs = [
-              pythonEnv
-              pkgs.texlive.combined.scheme-medium
-              pkgs.texlivePackages.fncychap
-            ];
-            buildPhase = ''
-              cd source
-              sphinx-build -b latex -t book . ../build/book
-              cd ../build/book
-              make
-            '';
-            installPhase = ''
-              mkdir -p $out
-              cp *.pdf $out/
+            format = "latex";
+            tag = "book";
+            extraInputs = texEnv;
+            extraSteps = ''
+              cd build/book && make
+              rm -rf !(*.pdf)
             '';
           };
 
-          wiki = pkgs.stdenv.mkDerivation {
+          wiki = buildSphinx {
             name = "sphinx-wiki";
-            src = ./.;
-            buildInputs = [ pythonEnv ];
-            buildPhase = ''
-              cd source
-              sphinx-build -b html -t wiki . ../build/wiki
-            '';
-            installPhase = ''
-              mkdir -p $out
-              cp -r ../build/wiki/* $out/
-            '';
+            format = "html";
+            tag = "wiki";
           };
         };
 
         devShells.default = pkgs.mkShell {
-          buildInputs = [
-            pythonEnv
-            pkgs.texlive.combined.scheme-medium
-            pkgs.texlivePackages.fncychap
-          ];
+          buildInputs = [ pythonEnv ] ++ texEnv;
           shellHook = ''
             echo "Sphinx documentation environment loaded"
-            echo "Build book: cd source && sphinx-build -b latex -t book . ../build/book && cd ../build/book && make"
-            echo "Build wiki: cd source && sphinx-build -b html -t wiki . ../build/wiki"
+            echo "Build book: nix build .#book"
+            echo "Build wiki: nix build .#wiki"
           '';
         };
       }
