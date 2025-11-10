@@ -27,7 +27,7 @@ latex_elements = {
 }
 
 # Wiki output (HTML)
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'furo'
 html_static_path = []
 
 import re

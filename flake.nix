@@ -15,7 +15,7 @@
           sphinx
           myst-parser
           sphinxcontrib-bibtex
-          sphinx-rtd-theme
+          furo
         ]);
 
         texEnv = [ (pkgs.texlive.combine {
