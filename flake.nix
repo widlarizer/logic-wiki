@@ -74,7 +74,7 @@
             tag = "wiki";
             installPhase = ''
               ls build/wiki
-              cp -rT build/wiki $out/
+              cp -r build/wiki/* $out/
             '';
           };
         };

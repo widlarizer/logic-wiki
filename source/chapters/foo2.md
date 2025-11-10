@@ -32,10 +32,10 @@ endmodule
 
 The techniques used here are based on {cite}`jones2019`.
 
-```{only} wiki
+````{only} wiki
 ## References
 
 ```{bibliography}
 :filter: False
 ```
-```
+````
