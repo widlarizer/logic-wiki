@@ -40,18 +40,15 @@
             upquote
             capt-of;
         })];
-        buildSphinx = { name, format, tag, extraInputs ? [], extraSteps ? "" }:
+        buildSphinx = { name, installPhase, format, tag, extraInputs ? [], extraSteps ? "" }:
           pkgs.stdenv.mkDerivation {
             inherit name;
+            inherit installPhase;
             src = ./.;
             buildInputs = [ pkgs.bash pythonEnv ] ++ extraInputs;
             buildPhase = ''
               sphinx-build -b ${format} -t ${tag} source build/${tag}
               ${extraSteps}
-            '';
-            installPhase = ''
-              mkdir -p $out
-              cp *.pdf $out/ 2>/dev/null
             '';
           };
       in
@@ -63,7 +60,11 @@
             tag = "book";
             extraInputs = texEnv;
             extraSteps = ''
-              cd build/book && make
+              make -C build/book
+            '';
+            installPhase = ''
+              mkdir -p $out
+              cp build/book/*.pdf $out/
             '';
           };
 
@@ -71,6 +72,10 @@
             name = "sphinx-wiki";
             format = "html";
             tag = "wiki";
+            installPhase = ''
+              ls build/wiki
+              cp -rT build/wiki $out/
+            '';
           };
         };
 
@@ -78,8 +83,6 @@
           buildInputs = [ pkgs.bash pythonEnv ] ++ texEnv;
           shellHook = ''
             echo "Sphinx documentation environment loaded"
-            echo "Build book: nix build .#book"
-            echo "Build wiki: nix build .#wiki"
           '';
         };
       }
