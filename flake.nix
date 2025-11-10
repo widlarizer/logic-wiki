@@ -38,7 +38,10 @@
             float
             parskip
             upquote
-            capt-of;
+            capt-of
+            pict2e
+            ellipse
+            ;
         })];
         buildSphinx = { name, installPhase, format, tag, extraInputs ? [], extraSteps ? "" }:
           pkgs.stdenv.mkDerivation {
