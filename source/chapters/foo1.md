@@ -31,7 +31,6 @@ This approach is described in detail by {cite}`smith2020`.
 ````{only} wiki
 ## References
 
-```{bibliography}
-:filter: False
+```{footbibliography}
 ```
 ````

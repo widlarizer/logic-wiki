@@ -30,5 +30,11 @@ latex_elements = {
 html_theme = 'sphinx_rtd_theme'
 html_static_path = []
 
-tags_has_book = 'book' in tags
-tags_has_wiki = 'wiki' in tags
+import re
+
+def replace_cite_on_wiki_tag(app, docname, source):
+    if app.tags.has("wiki"):
+        source[0] = re.sub(r"\{cite(:?[a-zA-Z0-9_-]*?)\}(?=[`])", r"{footcite\1}", source[0])
+
+def setup(app):
+    app.connect("source-read", replace_cite_on_wiki_tag)

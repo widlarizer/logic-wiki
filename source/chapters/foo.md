@@ -30,10 +30,9 @@ endmodule
 
 For detailed implementations, see the following sections on foo1 and foo2.
 
-```{only} wiki
+````{only} wiki
 ## References
 
-```{bibliography}
-:filter: False
+```{footbibliography}
 ```
-```
+````
