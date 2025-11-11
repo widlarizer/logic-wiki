@@ -19,7 +19,7 @@ bibtex_bibfiles = [
 ]
 bibtex_reference_style = 'author_year'
 
-templates_path = ['_templates']
+templates_path = ['../_templates']
 
 exclude_patterns = ['**refs.*'] if 'wiki' in tags else []
 suppress_warnings = [
@@ -30,12 +30,14 @@ suppress_warnings = [
 # Book output (LaTeX/PDF)
 latex_engine = 'pdflatex'
 latex_elements = {
-    'papersize': 'letterpaper',
-    'pointsize': '10pt',
+    'papersize': 'A4',
+    'pointsize': '12pt',
 }
+latex_theme_path = ['../_templates']
+latex_theme = 'logicbook'
 
 # Wiki output (HTML)
-html_theme = 'furo'
+html_theme = 'furo' if 'wiki' in tags else "sphinx_book_theme"
 html_static_path = []
 
 import re

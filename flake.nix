@@ -63,6 +63,7 @@
             tag = "book";
             extraInputs = texEnv;
             extraSteps = ''
+              cp _templates/logicbook.cls build/book/
               make -C build/book
             '';
             installPhase = ''
