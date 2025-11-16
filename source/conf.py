@@ -40,11 +40,11 @@ latex_theme = 'logicbook'
 html_theme = 'furo' if 'wiki' in tags else "sphinx_book_theme"
 html_static_path = []
 
-import re
+# import re
 
-def replace_cite_on_wiki_tag(app, docname, source):
-    if app.tags.has("wiki"):
-        source[0] = re.sub(r"\{cite(:?[a-zA-Z0-9_-]*?)\}(?=[`])", r"{footcite\1}", source[0])
+# def replace_cite_on_wiki_tag(app, docname, source):
+#     if app.tags.has("wiki"):
+#         source[0] = re.sub(r"\{cite(:?[a-zA-Z0-9_-]*?)\}(?=[`])", r"{footcite\1}", source[0])
 
-def setup(app):
-    app.connect("source-read", replace_cite_on_wiki_tag)
+# def setup(app):
+#     app.connect("source-read", replace_cite_on_wiki_tag)
