@@ -1,6 +1,6 @@
 ````{only} book
 # References
 
-```{bibliography} synth.bib
+```{footbibliography}
 ```
 ````

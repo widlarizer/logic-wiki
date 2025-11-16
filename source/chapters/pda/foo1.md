@@ -26,7 +26,7 @@ module foo1 (
 endmodule
 ```
 
-This approach is described in detail by {cite}`smith2020`.
+This approach is described in detail by {cite}`smith2020` and {cite}`jones2019`.
 
 ````{only} wiki
 ## References

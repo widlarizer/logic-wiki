@@ -33,8 +33,8 @@ latex_elements = {
     'papersize': 'A4',
     'pointsize': '12pt',
 }
-latex_theme_path = ['../_templates']
-latex_theme = 'logicbook'
+# latex_theme_path = ['../_templates']
+# latex_theme = 'logicbook'
 
 # Wiki output (HTML)
 html_theme = 'furo' if 'wiki' in tags else "sphinx_book_theme"
@@ -43,8 +43,8 @@ html_static_path = []
 import re
 
 def replace_cite_on_wiki_tag(app, docname, source):
-    if app.tags.has("wiki"):
-        source[0] = re.sub(r"\{cite(:?[a-zA-Z0-9_-]*?)\}(?=[`])", r"{footcite\1}", source[0])
+    # if app.tags.has("wiki"):
+    source[0] = re.sub(r"\{cite(:?[a-zA-Z0-9_-]*?)\}(?=[`])", r"{footcite\1}", source[0])
 
 def setup(app):
     app.connect("source-read", replace_cite_on_wiki_tag)
