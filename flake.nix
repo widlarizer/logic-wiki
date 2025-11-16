@@ -10,12 +10,28 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
+        sphinx = (sphinx.overrideAttrs ( old : {
+          version = old.version + "-nothebib";
+          src = pkgs.fetchFromGitHub {
+            owner = "widlarizer";
+            repo = "sphinx";
+            rev = "27678e0e213fe552b39ca830d05a722eb2b56be4";
+            postFetch = ''
+              # Change ä to æ in file names, since ä can be encoded multiple ways on different
+              # filesystems, leading to different hashes on different platforms.
+              cd "$out";
+              mv tests/roots/test-images/{testimäge,testimæge}.png
+              sed -i 's/testimäge/testimæge/g' tests/{test_build*.py,roots/test-images/index.rst}
+            '';
+            hash = "sha256-YWJ0cv2WPNtr2v3m+RtsLKWIo9o6xS6KQzySuWoYPEQ=";
+          };
+          disabledTests = old.disabledTests ++ [ "test_latex_thebibliography" ];
+        }));
 
         pythonEnv = pkgs.python3.withPackages (ps: with ps; [
-          sphinx
           myst-parser
           sphinxcontrib-bibtex
-          furo
+          furo.override { inherit sphinx; }
         ]);
 
         texEnv = [ (pkgs.texlive.combine {
