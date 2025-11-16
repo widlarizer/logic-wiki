@@ -33,7 +33,7 @@ latex_elements = {
     'papersize': 'A4',
     'pointsize': '12pt',
     'preamble': r'''
-\usepackage[sectionbib]{chapterbib}
+\usepackage{multibib}
 ''',
 }
 latex_theme_path = ['../_templates']

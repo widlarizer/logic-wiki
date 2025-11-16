@@ -57,6 +57,7 @@
             capt-of
             pict2e
             ellipse
+            multibib
             ;
         })];
         buildSphinx = { name, installPhase, format, tag, extraInputs ? [], extraSteps ? "" }:
