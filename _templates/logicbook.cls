@@ -87,8 +87,8 @@
 %
 \newenvironment{sphinxthebibliography}[1]{%
   % \phantomsection % not needed here since TeXLive 2010's hyperref
-  \begin{thebibliography}{#1}%
-  \addcontentsline{toc}{section}{\ifdefined\refname\refname\else\ifdefined\bibname\bibname\fi\fi}}{\end{thebibliography}}
+  \begin{bibliography}{#1}%
+  \addcontentsline{toc}{section}{\ifdefined\refname\refname\else\ifdefined\bibname\bibname\fi\fi}}{\end{bibliography}}
 
 
 % Same for the indices.

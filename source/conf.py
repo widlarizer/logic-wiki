@@ -32,13 +32,24 @@ latex_engine = 'pdflatex'
 latex_elements = {
     'papersize': 'A4',
     'pointsize': '12pt',
+    'preamble': r'''
+\usepackage[sectionbib]{chapterbib}
+''',
 }
 latex_theme_path = ['../_templates']
-latex_theme = 'logicbook'
+latex_theme = 'book'
 
 # Wiki output (HTML)
 html_theme = 'furo' if 'wiki' in tags else "sphinx_book_theme"
 html_static_path = []
+
+import sphinx.builders.latex.transforms
+
+class DummyTransform(sphinx.builders.latex.transforms.BibliographyTransform):
+    def run(self, **kwargs):
+        pass
+
+sphinx.builders.latex.transforms.BibliographyTransform = DummyTransform
 
 import re
 
